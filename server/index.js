@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost/auth',{useMongoClient:true});
 
 // App Setup
 app.use(morgan('combined'));
+// fix error XMLHttpRequest cannot load "..."
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
 

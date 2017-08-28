@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -14,13 +14,12 @@ export function signinUser({ email, password }) {
     // Submit email/password to the server
     axios.post(`${ROOT_URL}/signin`, { email, password })
       .then(response => {
+        console.log("response", response);
         // If request is good...
         // - Update state to indicate user is authenticated
         dispatch({ type: AUTH_USER });
         // - Save the JWT token
         localStorage.setItem('token', response.data.token);
-        // - redirect to the route '/feature'
-        browserHistory.push('/feature');
       })
       .catch(err => {
         // If request is bad...

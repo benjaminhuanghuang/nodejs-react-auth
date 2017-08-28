@@ -1,4 +1,5 @@
 const Authentication = require('./controllers/authentication');
+const passportService = require('./services/passport');    // DO NOT remove this line!
 const passport = require('passport');
 
 const requireAuth = passport.authenticate('jwt', { session: false });

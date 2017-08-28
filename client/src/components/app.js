@@ -3,11 +3,11 @@ import { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 //
 import Header from './Header';
-import Signin from './auth/signin';
+import SignIn from './auth/SignIn';
 import Welcome from './Welcome';
 import Signout from './auth/signout';
 import Signup from './auth/signup';
-import Feature from './feature';
+import Feature from './Feature';
 import RequireAuth from './auth/require_auth';
 
 export default class App extends Component {
@@ -17,7 +17,7 @@ export default class App extends Component {
       <div>
         <Header/>
         <Route exact path="/" component={Welcome} />
-        <Route path="/signin" component={Signin} />
+        <Route path="/signin" component={SignIn} />
         <Route path="/signout" component={Signout} />
         <Route path="/signup" component={Signup} />
         <Route path="/feature" component={RequireAuth(Feature)} />
