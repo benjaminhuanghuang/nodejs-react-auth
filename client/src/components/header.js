@@ -25,12 +25,22 @@ class Header extends Component {
   render() {
     return (
       <nav className="navbar navbar-light">
-        <NavLink to="/" className="navbar-brand">Redux Auth</NavLink>
-        <ul className="nav navbar-nav">
-          <li className="nav-item">
-            Sign in
-          </li>
-        </ul>
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+            <NavLink className="navbar-brand" to="/">React Auth Client</NavLink>
+          </div>
+          <div id="navbar" className="navbar-collapse collapse">
+            <ul className="nav navbar-nav">
+              <li><NavLink exact activeClassName="activeNav" to="/signin">sign in</NavLink></li>
+            </ul>
+          </div>
+        </div>
       </nav>
     );
   }

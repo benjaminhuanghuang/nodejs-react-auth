@@ -16,7 +16,7 @@ export default class App extends Component {
     <BrowserRouter>
       <div>
         <Header/>
-        <Route path="/" component={Welcome} />
+        <Route exact path="/" component={Welcome} />
         <Route path="/signin" component={Signin} />
         <Route path="/signout" component={Signout} />
         <Route path="/signup" component={Signup} />
