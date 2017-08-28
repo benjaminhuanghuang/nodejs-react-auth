@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import React, { Component } from "react";
+import { reduxForm } from "redux-form";
+import { connect } from "react-redux";
 //
-import * as actions from '../../actions';
+import * as actions from "../../actions";
 
 class Signin extends Component {
   handleFormSubmit({ email, password }) {
@@ -20,7 +21,7 @@ class Signin extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { email, password }} = this.props;
+    const { handleSubmit, fields: { email, password } } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -33,7 +34,9 @@ class Signin extends Component {
           <input {...password} type="password" className="form-control" />
         </fieldset>
         {this.renderAlert()}
-        <button action="submit" className="btn btn-primary">Sign in</button>
+        <button action="submit" className="btn btn-primary">
+          Sign in
+        </button>
       </form>
     );
   }
@@ -43,7 +46,9 @@ function mapStateToProps(state) {
   return { errorMessage: state.auth.error };
 }
 
-export default reduxForm({
-  form: 'signin',
-  fields: ['email', 'password']  // fields want to reproduce
-}, mapStateToProps, actions)(Signin);
+const SigninForm = reduxForm({
+  form: "sigin",
+  fields: ["email", "password"] // fields want to reproduce
+})(Signin);
+
+export default connect(mapStateToProps, actions)(SigninForm);

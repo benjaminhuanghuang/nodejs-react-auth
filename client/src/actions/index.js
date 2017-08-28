@@ -22,9 +22,10 @@ export function signinUser({ email, password }) {
         // - redirect to the route '/feature'
         browserHistory.push('/feature');
       })
-      .catch(() => {
+      .catch(err => {
         // If request is bad...
         // - Show an error to the user
+        console.log(err);
         dispatch(authError('Bad Login Info'));
       });
   }
