@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
+//
 import * as actions from '../../actions';
 
 class Signin extends Component {
@@ -44,5 +45,5 @@ function mapStateToProps(state) {
 
 export default reduxForm({
   form: 'signin',
-  fields: ['email', 'password']
+  fields: ['email', 'password']  // fields want to reproduce
 }, mapStateToProps, actions)(Signin);
