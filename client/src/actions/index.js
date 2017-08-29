@@ -39,7 +39,7 @@ export const signinUser = ({ email, password , callback}) => async dispatch => {
       // - Update state to indicate user is authenticated
       dispatch({type: AUTH_USER});
       // - Save the JWT token
-      localStorage.setItem('react-math-token', res.data.token);
+      localStorage.setItem('token', res.data.token);
       callback();
   }
   catch (err) {

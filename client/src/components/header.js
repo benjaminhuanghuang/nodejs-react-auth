@@ -3,24 +3,24 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
-  // renderLinks() {
-  //   if (this.props.authenticated) {
-  //     // show a link to sign out
-  //     return <li className="nav-item">
-  //       <NavLink className="nav-link" to="/signout">Sign Out</NavLink>
-  //     </li>
-  //   } else {
-  //     // show a link to sign in or sign up
-  //     return [
-  //       <li className="nav-item" key={1}>
-  //         <NavLink className="nav-link" to="/signin">Sign In</NavLink>
-  //       </li>,
-  //       <li className="nav-item" key={2}>
-  //         <NavLink className="nav-link" to="/signup">Sign Up</NavLink>
-  //       </li>
-  //     ];
-  //   }
-  // }
+  renderLinks() {
+    if (this.props.authenticated) {
+      // show a link to sign out
+      return <li className="nav-item">
+        <NavLink exact activeClassName="activeNav" to="/signout">sign out</NavLink>
+      </li>
+    } else {
+      // show a link to sign in or sign up
+      return [
+        <li className="nav-item" key={1}>
+          <NavLink exact activeClassName="activeNav" to="/signin">sign in</NavLink>
+        </li>,
+        <li className="nav-item" key={2}>
+          <NavLink exact activeClassName="activeNav" to="/signup">sign up</NavLink>
+        </li>
+      ];
+    }
+  }
 
   render() {
     return (
@@ -37,7 +37,7 @@ class Header extends Component {
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav">
-              <li><NavLink exact activeClassName="activeNav" to="/signin">sign in</NavLink></li>
+              {this.renderLinks()}
             </ul>
           </div>
         </div>
