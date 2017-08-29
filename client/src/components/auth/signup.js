@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import FormInput from '../FormInput';
+import {withRouter} from "react-router-dom";
+
 import * as actions from '../../actions';
 
 class Signup extends Component {
   handleFormSubmit(formProps) {
-    debugger
     // Call action creator to sign up the user!
-    this.props.signupUser(formProps);
+    this.props.signupUser({...formProps, callback:()=>{
+      // - redirect to the route '/feature'
+      this.props.history.push("/feature");
+    }});
   }
 
   renderAlert() {
@@ -65,4 +69,4 @@ const SignupForm = reduxForm({
   fields: ['email', 'password', 'passwordConfirm'],
   validate
 })(Signup);
-export default connect(mapStateToProps, actions)(SignupForm);
+export default connect(mapStateToProps, actions)(withRouter(SignupForm));

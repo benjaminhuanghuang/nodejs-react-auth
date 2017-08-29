@@ -49,7 +49,7 @@ export const signinUser = ({ email, password , callback}) => async dispatch => {
 }
 
 
-export function signupUser({ email, password }) {
+export function signupUserOldStyle({ email, password }) {
   return function(dispatch) {
     axios.post(`${ROOT_URL}/signup`, { email, password })
       .then(response => {
@@ -58,6 +58,18 @@ export function signupUser({ email, password }) {
         browserHistory.push('/feature');
       })
       .catch(response => dispatch(authError(response.data.error)));
+  }
+}
+export const signupUser = ({ email, password, callback}) => async dispatch => {
+  try {
+      const response = await axios.post(`${ROOT_URL}/signup`, { email, password });
+      dispatch({ type: AUTH_USER });
+      localStorage.setItem('token', response.data.token);
+      callback();;
+  }
+  catch (err) {
+      console.log(err);
+      dispatch(authError('Bad Login Info'));
   }
 }
 
