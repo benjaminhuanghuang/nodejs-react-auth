@@ -89,6 +89,7 @@ export function signoutUser() {
 export function fetchMessage() {
   return function(dispatch) {
     axios.get(ROOT_URL, {
+      // Add token
       headers: { authorization: localStorage.getItem('token') }
     })
       .then(response => {
