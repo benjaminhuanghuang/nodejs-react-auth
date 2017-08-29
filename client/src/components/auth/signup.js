@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import FormInput from '../FormInput';
 import * as actions from '../../actions';
 
 class Signup extends Component {
   handleFormSubmit(formProps) {
+    debugger
     // Call action creator to sign up the user!
     this.props.signupUser(formProps);
   }
@@ -19,25 +22,11 @@ class Signup extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { email, password, passwordConfirm }} = this.props;
-
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <input className="form-control" {...email} />
-          {email.touched && email.error && <div className="error">{email.error}</div>}
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <input className="form-control" {...password} type="password" />
-          {password.touched && password.error && <div className="error">{password.error}</div>}
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Confirm Password:</label>
-          <input className="form-control" {...passwordConfirm} type="password" />
-          {passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div>}
-        </fieldset>
+      <form onSubmit={this.props.handleSubmit(this.handleFormSubmit.bind(this))}>
+        <Field component={FormInput} type="text" label="Email" name="email"/>
+        <Field component={FormInput} type="password" label="Password" name="password"/>
+        <Field component={FormInput} type="password" label="Password Confirm"  name="passwordConfirm"/>
         {this.renderAlert()}
         <button action="submit" className="btn btn-primary">Sign up!</button>
       </form>
@@ -45,22 +34,22 @@ class Signup extends Component {
   }
 }
 
-function validate(formProps) {
+function validate(values) {
   const errors = {};
 
-  if (!formProps.email) {
+  if (!values.email) {
     errors.email = 'Please enter an email';
   }
 
-  if (!formProps.password) {
+  if (!values.password) {
     errors.password = 'Please enter a password';
   }
 
-  if (!formProps.passwordConfirm) {
+  if (!values.passwordConfirm) {
     errors.passwordConfirm = 'Please enter a password confirmation';
   }
 
-  if (formProps.password !== formProps.passwordConfirm) {
+  if (values.password !== values.passwordConfirm) {
     errors.password = 'Passwords must match';
   }
 
@@ -71,8 +60,9 @@ function mapStateToProps(state) {
   return { errorMessage: state.auth.error };
 }
 
-export default reduxForm({
+const SignupForm = reduxForm({
   form: 'signup',
   fields: ['email', 'password', 'passwordConfirm'],
   validate
-}, mapStateToProps, actions)(Signup);
+})(Signup);
+export default connect(mapStateToProps, actions)(SignupForm);

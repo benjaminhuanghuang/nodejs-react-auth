@@ -5,8 +5,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './Header';
 import SignIn from './auth/SignIn';
 import Welcome from './Welcome';
-import Signout from './auth/signout';
-import Signup from './auth/signup';
+import Signout from './auth/Signout';
+import Signup from './auth/Signup';
 import Feature from './Feature';
 import RequireAuth from './auth/require_auth';
 
