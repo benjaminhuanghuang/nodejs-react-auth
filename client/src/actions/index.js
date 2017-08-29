@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -9,7 +9,7 @@ import {
 
 const ROOT_URL = 'http://localhost:3090';
 
-export function signinUser({ email, password }) {
+export function signinUserOldStyle({ email, password }) {
   return function(dispatch) {
     // Submit email/password to the server
     axios.post(`${ROOT_URL}/signin`, { email, password })
@@ -29,6 +29,25 @@ export function signinUser({ email, password }) {
       });
   }
 }
+/*
+  async-await need use 'babel-polyfill'
+  Uncaught ReferenceError: regeneratorRuntime is not defined,
+*/
+export const signinUser = ({ email, password , callback}) => async dispatch => {
+  try {
+      const res = await axios.post(`${ROOT_URL}/signin`, { email, password });
+      // - Update state to indicate user is authenticated
+      dispatch({type: AUTH_USER});
+      // - Save the JWT token
+      localStorage.setItem('react-math-token', res.data.token);
+      callback();
+  }
+  catch (err) {
+      console.log(err);
+      dispatch(authError('Bad Login Info'));
+  }
+}
+
 
 export function signupUser({ email, password }) {
   return function(dispatch) {

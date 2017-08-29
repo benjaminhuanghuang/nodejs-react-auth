@@ -1,6 +1,8 @@
+const path = require('path');
 module.exports = {
   entry: [
-    './src/index.js'
+    './src/index.js',
+    'babel-polyfill',
   ],
   output: {
     path: __dirname,
@@ -14,7 +16,8 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    modules: ['client', 'node_modules'],
   },
   devServer: {
     historyApiFallback: true,

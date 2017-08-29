@@ -7,12 +7,13 @@ import * as actions from "../../actions";
 import FormInput from '../FormInput'
 
 class SignIn extends Component {
+  
   handleFormSubmit({ email, password }) {
     // Need to do something to log user in
-    this.props.signinUser({ email, password });
-
-    // - redirect to the route '/feature'
-    this.props.history.push("/feature");
+    this.props.signinUser({ email, password, callback:()=>{
+      // - redirect to the route '/feature'
+      this.props.history.push("/feature");
+    }}); 
   }
 
   renderAlert() {
