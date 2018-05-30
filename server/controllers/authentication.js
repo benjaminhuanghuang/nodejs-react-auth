@@ -2,10 +2,11 @@ const jwt = require('jwt-simple');
 const User = require('../models/user');
 const config = require('../config');
 
-// User id + secret string  = JSON web token
-// Token + secret string = user id
+// User id encoded by secret string  = JSON web token
+// Token decoded by secret string = user id
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
+  // subject(ower id of token) and issued at time
   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
 
