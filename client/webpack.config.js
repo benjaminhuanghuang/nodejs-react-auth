@@ -1,26 +1,52 @@
 const path = require('path');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
-  entry: [
-    './src/index.js',
-    'babel-polyfill',
-  ],
+  entry: {
+    index: './src/index.js'
+  },
   output: {
-    path: __dirname,
-    publicPath: '/',
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js'
   },
+  mode: 'development',
   module: {
-    loaders: [{
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }]
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+            options: { minimize: true }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
+      }
+    ]
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-    modules: ['client', 'node_modules'],
-  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./index.html",
+      filename: "index.html"
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
+  ],
   devServer: {
     historyApiFallback: true,
-    contentBase: './'
+    contentBase: './public'
   }
 };
