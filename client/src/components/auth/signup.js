@@ -1,72 +1,51 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import FormInput from '../FormInput';
-import {withRouter} from "react-router-dom";
-
 import * as actions from '../../actions';
 
 class Signup extends Component {
-  handleFormSubmit(formProps) {
-    // Call action creator to sign up the user!
-    this.props.signupUser({...formProps, callback:()=>{
-      // - redirect to the route '/feature'
-      this.props.history.push("/feature");
-    }});
-  }
-
-  renderAlert() {
-    if (this.props.errorMessage) {
-      return (
-        <div className="alert alert-danger">
-          <strong>Oops!</strong> {this.props.errorMessage}
-        </div>
-      );
-    }
-  }
+  onSubmit = formProps => {
+    this.props.signup(formProps, () => {
+      this.props.history.push('/feature');
+    });
+  };
 
   render() {
+    const { handleSubmit } = this.props;
+
     return (
-      <form onSubmit={this.props.handleSubmit(this.handleFormSubmit.bind(this))}>
-        <Field component={FormInput} type="text" label="Email" name="email"/>
-        <Field component={FormInput} type="password" label="Password" name="password"/>
-        <Field component={FormInput} type="password" label="Password Confirm"  name="passwordConfirm"/>
-        {this.renderAlert()}
-        <button action="submit" className="btn btn-primary">Sign up!</button>
+      <form onSubmit={handleSubmit(this.onSubmit)}>
+        <fieldset>
+          <label>Email</label>
+          <Field
+            name="email"
+            type="text"
+            component="input"
+            autoComplete="none"
+          />
+        </fieldset>
+        <fieldset>
+          <label>Password</label>
+          <Field
+            name="password"
+            type="password"
+            component="input"
+            autoComplete="none"
+          />
+        </fieldset>
+        <div>{this.props.errorMessage}</div>
+        <button>Sign Up!</button>
       </form>
     );
   }
 }
 
-function validate(values) {
-  const errors = {};
-
-  if (!values.email) {
-    errors.email = 'Please enter an email';
-  }
-
-  if (!values.password) {
-    errors.password = 'Please enter a password';
-  }
-
-  if (!values.passwordConfirm) {
-    errors.passwordConfirm = 'Please enter a password confirmation';
-  }
-
-  if (values.password !== values.passwordConfirm) {
-    errors.password = 'Passwords must match';
-  }
-
-  return errors;
-}
-
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
+  return { errorMessage: state.auth.errorMessage };
 }
 
-const SignupForm = reduxForm({
-  form: 'signup',
-  fields: ['email', 'password', 'passwordConfirm'],
-  validate
-})(Signup);
-export default connect(mapStateToProps, actions)(withRouter(SignupForm));
+export default compose(
+  connect(mapStateToProps, actions),
+  reduxForm({ form: 'signup' })
+)(Signup);
