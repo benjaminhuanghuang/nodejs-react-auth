@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');    // bcrypt user password
 
 // Define our model schema
 const userSchema = new Schema({
@@ -28,6 +28,7 @@ userSchema.pre('save', function(next) {
     });
   });
 });
+
 // Check password
 userSchema.methods.comparePassword = function(candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
