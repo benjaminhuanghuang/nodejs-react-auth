@@ -1,6 +1,21 @@
 import axios from 'axios';
 import { AUTH_USER, AUTH_ERROR } from './types';
 
+// Navid version
+export const signup_navie = ({ email, password }) => {
+  return {
+    type: AUTH_USER,
+    payload: "result"
+  }
+};
+
+export const signup_navie_2 = ({ email, password }) => {
+  return (dispatch) => {
+
+  }
+};
+
+
 export const signup = (formProps, callback) => async dispatch => {
   try {
     const response = await axios.post(

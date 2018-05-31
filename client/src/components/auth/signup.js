@@ -6,6 +6,7 @@ import * as actions from '../../actions';
 
 class Signup extends Component {
   onSubmit = formProps => {
+    // call action creator
     this.props.signup(formProps, () => {
       this.props.history.push('/feature');
     });
@@ -45,4 +46,8 @@ function mapStateToProps(state) {
   return { errorMessage: state.auth.errorMessage };
 }
 
-export default compose(connect(mapStateToProps, actions), reduxForm({ form: 'signup' }))(Signup);
+// compose allows us to apply multiple higher order component to a single component
+export default compose(
+  connect(mapStateToProps, actions), 
+  reduxForm({ form: 'signup' })
+)(Signup);
